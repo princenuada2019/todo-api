@@ -1,3 +1,5 @@
+require('./config/config');
+
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -8,6 +10,7 @@ var {Todo} = require('./models/todo');
 var {Users} = require('./models/users');
 
 var app = express();
+const port = process.env.PORT;
 
 app.use(bodyParser.json());
 
@@ -85,7 +88,7 @@ app.patch('/todos/:id', (req, res) => {
     }).catch((error) => res.status(400).send(error));
 });
 
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log(`Started up at port 3000`);
 });
 
