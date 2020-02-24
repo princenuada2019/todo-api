@@ -36,7 +36,7 @@ UserSchema.methods.toJSON = function () {
     var user = this;
     var userObject = user.toObject();
 
-    return _.pick(userObject, ['_id', 'email', 'tokens[0].token']);
+    return _.pick(userObject, ['_id', 'email']);
 };
 
 UserSchema.methods.generateAuthToken = function () {
@@ -46,7 +46,7 @@ UserSchema.methods.generateAuthToken = function () {
 
     user.tokens = user.tokens.concat([{access, token}]);
 
-    return user.save().then((token) => {
+    return user.save().then(() => {
         return token;
     });
 };
