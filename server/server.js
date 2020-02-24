@@ -88,6 +88,24 @@ app.patch('/todos/:id', (req, res) => {
     }).catch((error) => res.status(400).send(error));
 });
 
+app.post('/users', (req, res) => {
+    let body = _.pick(req.body, ['email', 'password']);
+    let user = new Users(body);
+    /*if (!(validator.isEmail(body.email))) {
+        return res.send('please insert a valid email');
+    }*/
+
+    user.save().then(() => {
+        return user.generateAuthToken();
+    }).then((token) => {
+        /*res.header('x-auth', token).send(user);*/
+        res.send(user);
+    }).catch((error) => {
+        res.status(400).send(`ali gh ${error}`);
+    })
+});
+
+
 app.listen(port, () => {
     console.log(`Started up at port 3000`);
 });
