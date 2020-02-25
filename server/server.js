@@ -8,6 +8,7 @@ const {ObjectID} = require('mongodb');
 var {mongoose} = require('./db/mongoose');
 var {Todo} = require('./models/todo');
 var {Users} = require('./models/users');
+var {authenticate} = require('./middleware/authenticate');
 
 var app = express();
 const port = process.env.PORT;
@@ -102,6 +103,10 @@ app.post('/users', (req, res) => {
     }).catch((error) => {
         res.status(400).send(`ali gh ${error}`);
     })
+});
+
+app.get('/users/me', authenticate, (req, res) => {
+    res.send(req.user);
 });
 
 
